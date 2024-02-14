@@ -1,6 +1,8 @@
 <?php
+
 session_start();
 include 'db_conn.php';
+
   $email = isset($_POST['email']) ? $_POST['email'] : '';
   $pass = isset($_POST['password']) ? $_POST['password'] : '';
 
@@ -14,6 +16,8 @@ include 'db_conn.php';
 
     // Vérifier si la préparation de la requête a réussi
     if ($stmt) {
+      $_SESSION['email'] = $email;
+      $_SESSION['password'] = $pass;
         // Binder les paramètres
         $stmt->bindParam(1, $email, PDO::PARAM_STR);
         $stmt->bindParam(2, $pass, PDO::PARAM_STR);
@@ -29,8 +33,6 @@ include 'db_conn.php';
         $result2 = $stmt2->fetch(PDO::FETCH_ASSOC)['result'];
         // Afficher le résultat (à des fins de test)
         if($result > 0){
-          $_SESSION['email'] = $email;
-          $_SESSION['password'] = $password;
           header("Location: ENSEIGNANT/Acceuil.php");
           exit;
         }

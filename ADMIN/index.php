@@ -279,6 +279,22 @@
               </div>
             </div>
           </div>
+          <table class="table table-dark">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First_Name</th>
+                  <th scope="col">Last_Name</th>
+                  <th scope="col">email</th>
+                  <th scope="col">Ue</th>
+                  <th scope="col">password</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php include '../db_conn.php';
+                      include 'ENSEIGNANTS/TablePlanning.php'?>
+              </tbody>
+            </table>
 
       <footer class="main-footer">
         <div class="footer-left">

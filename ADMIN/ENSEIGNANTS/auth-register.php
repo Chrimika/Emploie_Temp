@@ -1,12 +1,13 @@
 <?php 
     session_start();
     include '../../db_conn.php';
+    include '../../ENSEIGNANT/Functions.php';
 
     $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : '';
     $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $ue = isset($_POST['ue']) ? $_POST['ue'] : '';
-    $password = isset($_POST['password']) ? password_hash($_POST['password'], PASSWORD_BCRYPT) : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
 
     $sql2 = "SELECT nom FROM ue";
     try {
@@ -33,20 +34,8 @@
     $indiceSelect = array_search($ue, $listeNoms);
     $indiceSelect++;
 
-    $sql = "CALL InsertEnseignant(?, ?, ?, ?, ?)";
-    try {
-      // Exécuter la requête
-      $resultat = $conn->prepare($sql);
-
-      if($resultat && $first_name!=''){
-        //$resultat->bind_param("ssssi", $first_name, $last_name, $email, $password, $indiceSelect);
-        $resultat->execute([$first_name, $last_name, $email, $password, $indiceSelect]);
-        $resultat->closeCursor();
-      }
-    }catch(PDOExeption $e){
-      echo "Erreur :" . $e->getMessage();
-    }
-  // Requête SQL pour récupérer les valeurs de l'attribut "nom" de la table "ue"
+    $resultat = AjoutEnseignant($first_name, $last_name, $email, $password, $indiceSelect);
+    echo $resultat ;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +66,7 @@
           <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
             <div class="card card-primary">
               <div class="card-header">
-                <h4>Register</h4>
+                <h4>Register Enseignants</h4>
               </div>
               <div class="card-body">
                 <form method="post" action="auth-register.php">
